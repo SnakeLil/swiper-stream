@@ -20,7 +20,7 @@ const CarouselNative = ({ data, onChange }) => {
     const currentX = e.touches[0].clientX;
     const diff = currentX - startXRef.current;
 
-    const maxMove = 200; // 最大滑动距离
+    const maxMove = 150; // 增加最大滑动距离限制
     const boundedDiff = Math.max(Math.min(diff, maxMove), -maxMove);
 
     setTranslateX(boundedDiff);
@@ -29,7 +29,7 @@ const CarouselNative = ({ data, onChange }) => {
   const handleTouchEnd = () => {
     if (!isDraggingRef.current) return;
 
-    const threshold = 100; // 阈值
+    const threshold = 50; // 降低阈值使滑动更灵敏
 
     if (Math.abs(translateX) > threshold) {
       const newIndex = translateX > 0
@@ -67,7 +67,8 @@ const CarouselNative = ({ data, onChange }) => {
       transformOrigin: "center center",
       opacity: distance > 1 ? 0.3 : 1,
       transition: isDraggingRef.current ? 'none' : 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)',
-      zIndex: 10 - distance
+      zIndex: 10 - distance,
+      visibility: distance > 2 ? 'hidden' : 'visible'
     };
   };
 
@@ -85,6 +86,9 @@ const CarouselNative = ({ data, onChange }) => {
       >
         {data.map((item, index) => (
           <View
+            style={{
+              zIndex: activeIndex === index ? 2 : 1,
+            }}
             key={index}
             className='carousel-item'
             onClick={() => {
