@@ -1,7 +1,7 @@
 // import React from 'react';
 import { View } from "@tarojs/components";
 import "./indextwo.scss";
-import Carousel from "../Carousel";
+import CarouselNative from "../swiper-carousel";
 
 export default function Animaticomponone({ value }) {
   const { CarouselTop, CarouselBottom } = value; // eslint-disable-line no-unused-vars
@@ -13,8 +13,7 @@ export default function Animaticomponone({ value }) {
       <View className='animationtwo_swiper'>
         <View className='backgroundone'></View>
         <View className='backgroundtwo'></View>
-        <Carousel data={CarouselTop} onChange={(value)=>{
-          // 点击回传
+        <CarouselNative data={CarouselTop} onChange={(value)=>{
           console.log(value)
         }}
         />
