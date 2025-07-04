@@ -1,0 +1,59 @@
+.marintops{
+  margin-top: 160px;
+}
+.canvasers{
+  width: 800px;
+  height: 600px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  position: relative;
+  margin: 0 auto;
+  
+  .yuanhu{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    
+    // 椭圆参数：半长轴a=350px，半短轴b=250px
+    // 使用椭圆参数方程：x = a*cos(θ), y = b*sin(θ)
+    
+    // 第1个元素 - 0度 (cos(0°)=1, sin(0°)=0)
+    &:nth-child(1){
+      background-color: #FF69B4;
+      transform: translate(-50%, -50%) translate(350px, 0px);
+    }
+    
+    // 第2个元素 - 60度 (cos(60°)=0.5, sin(60°)=0.866)
+    &:nth-child(2){
+      background-color: #FFB6C1;
+      transform: translate(-50%, -50%) translate(175px, -216.5px);
+    }
+    
+    // 第3个元素 - 120度 (cos(120°)=-0.5, sin(120°)=0.866)
+    &:nth-child(3){
+      background-color: #FFC0CB;
+      transform: translate(-50%, -50%) translate(-175px, -216.5px);
+    }
+    
+    // 第4个元素 - 180度 (cos(180°)=-1, sin(180°)=0)
+    &:nth-child(4){
+      background-color: #FF1493;
+      transform: translate(-50%, -50%) translate(-350px, 0px);
+    }
+    
+    // 第5个元素 - 240度 (cos(240°)=-0.5, sin(240°)=-0.866)
+    &:nth-child(5){
+      background-color: #FF6347;
+      transform: translate(-50%, -50%) translate(-175px, 216.5px);
+    }
+    
+    // 第6个元素 - 300度 (cos(300°)=0.5, sin(300°)=-0.866)
+    &:nth-child(6){
+      background-color: #FF4500;
+      transform: translate(-50%, -50%) translate(175px, 216.5px);
+    }
+  }
+}

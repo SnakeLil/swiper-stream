@@ -1,0 +1,610 @@
+$primary-color: #3498db;
+// 定义一个变量，用于记录动画执行的时间
+.animation_one {
+  .index_top{
+    width: 100%;
+    height: 160px;
+  }
+  min-height: 100vh;
+  padding: 0px 20px;
+  position: relative;
+  /* 背景色从上到下渐变 */
+  background: linear-gradient(to bottom, #A37464, #D6A797);
+  .animationtops_top_type_select{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.7s;
+    opacity: 1;
+    position: absolute;
+    top: -30px;
+    left: 0px;
+    z-index: 999;
+    .selectTypeClass{
+      font-size: 22px;
+      background: rgb(109,34,56);
+      color: #ffffff;
+      padding: 10px 20px;
+      border-radius: 10px;
+    }
+  }
+  .animationtops_top_type_select_active{
+    opacity: 0;
+  }
+  .one_centers{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    .animationtops{
+      height: 50vh;
+      margin-top: 8vh;
+      position: relative;
+      padding: 20px 0px 30px 0px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.7s;
+      .animationtops_left{
+        width: 55%;
+        height: 100%;
+        position: relative;
+        .animationtops_left_item{
+          width: 300px;
+          height: 95%;
+          position: absolute;
+          bottom: 0px;
+          transition: all 0.7s;
+          .animationtops_left_item_img{
+            transform: rotateY(180deg);
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            bottom: 0px;
+          }
+        }
+      }
+      
+      .animationtops_right{
+        width: 45%;
+        height: 100%;
+        position: relative;
+        left: 0px;
+        // bottom: 0px;
+        top: 0px;
+        transform: scale(1);
+        transition: all 0.7s;
+        .animationtops_left_item{
+          position: absolute;
+          width: 300px;
+          height: 50%;
+          left: 50%;
+          transform: translateX(-50%);
+          text-align: center;
+          z-index: 2;
+          transition: all 0.7s;
+        }
+        .animationtops_left_item_img{
+          width: 100%;
+          height: 400px;
+        }
+      }
+      .opactionClassSelect{
+        animation: identifier 1s forwards;
+      }
+    }
+    .animationtops_select{
+      margin-top: 2vh;
+    }
+    .defaultclass{
+      margin-top: 7vh;
+    }
+    // 新增的类名样式
+    // 类名1：左2右2
+    .showLeftTwoRightTwo{
+      .animationtops_left{
+        .animationtops_left_item{
+          transition: all 0.7s;
+          &:nth-child(1){
+            left: 90px;
+            z-index: 2;
+          }
+          &:nth-child(2){
+            left: -10px!important;
+            z-index: 1;
+          }
+        }
+      }
+      .animationtops_right{
+        .animationtops_left_item{
+          transition: all 0.7s;
+          &:nth-child(1){
+            bottom: 0px;
+            z-index: 2;
+          }
+          &:nth-child(2){
+            bottom: 46%;
+            z-index: 1;
+          }
+        }
+      }
+    }
+    // 类名2：左1右0
+    .showOnlyLeftOne{
+      .animationtops_right{
+        left: 330px!important;
+        bottom: -360px!important;
+        transform: scale(0.7)!important;
+        width: 0px!important;
+        transition: all 0.7s;
+        .animationtops_left_item{
+          transition: all 0.7s;
+          bottom: -360px!important;
+        }
+      }
+      .animationtops_left{
+        width: 100%;
+        .animationtops_left_item{
+          transition: all 0.7s;
+          &:nth-child(1){
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+          }
+          &:nth-child(2){
+            z-index: 1;
+            left: -330px!important;
+          }
+        }
+      }
+    }
+    // 类名3：左2右0
+    .showOnlyLeftTwo{
+      .animationtops_right{
+        left: 330px!important;
+        bottom: -360px!important;
+        transform: scale(0.7)!important;
+        // width: 0px!important;
+        transition: all 0.7s;
+        .animationtops_left_item{
+          transition: all 0.7s;
+          bottom: -360px!important;
+        }
+      }
+      .animationtops_left{
+        width: 100%;
+        .animationtops_left_item{
+          transition: all 0.7s;
+          &:nth-child(1){
+            left: 57%;
+            z-index: 2;
+            transform: translateX(-50%);
+          }
+          &:nth-child(2){
+            z-index: 1;
+            left: 42%!important;
+            transform: translateX(-50%);
+          }
+        }
+      }
+    }
+    // 类名4：左1 右1
+    .showLeftOneRightOne{
+      .animationtops_left{
+        width: 55%;
+        transition: all 0.7s;
+        .animationtops_left_item{
+          transition: all 0.7s;
+          &:nth-child(1){
+            transition: all 0.7s;
+            left: 50%;
+            z-index: 2;
+            transform: translateX(-50%);
+          }
+          &:nth-child(2){
+            transition: all 0.7s;
+            z-index: 1;
+            left: -330px!important;
+          }
+        }
+      }
+      .animationtops_right{
+        width: 45%;
+        transition: all 0.7s;
+        .animationtops_left_item{
+          transition: all 0.7s;
+          &:nth-child(1){
+            transition: all 0.7s;
+            bottom: 0px;
+            z-index: 2;
+          }
+          &:nth-child(2){
+            transition: all 0.7s;
+            bottom: 0px;
+            z-index: 1;
+          }
+        }
+      }
+    }
+    // 类名5：左1 右2
+    .showLeftOneRightTwo{
+      .animationtops_left{
+        width: 55%;
+        transition: all 0.7s;
+        .animationtops_left_item{
+          transition: all 0.7s;
+          &:nth-child(1){
+            transition: all 0.7s;
+            left: 50%;
+            z-index: 2;
+            transform: translateX(-50%);
+          }
+          &:nth-child(2){
+            transition: all 0.7s;
+            z-index: 1;
+            left: -330px!important;
+          }
+        }
+      }
+      .animationtops_right{
+        width: 45%;
+        transition: all 0.7s;
+        .animationtops_left_item{
+          transition: all 0.7s;
+          &:nth-child(1){
+            bottom: 0px;
+            z-index: 2;
+          }
+          &:nth-child(2){
+            bottom: 46%;
+            z-index: 1;
+          }
+        }
+      }
+    }
+    // 类名6：左2 右1
+    .showLeftTwoRightOne{
+      transition: all 0.7s;
+      .animationtops_left{
+        width: 55%;
+        transition: all 0.7s;
+        .animationtops_left_item{
+          transition: all 0.7s;
+          &:nth-child(1){
+            left: 90px;
+            z-index: 2;
+          }
+          &:nth-child(2){
+            left: -10px!important;
+            z-index: 1;
+          }
+        }
+      }
+      .animationtops_right{
+        width: 45%;
+        transition: all 0.7s;
+        .animationtops_left_item{
+          transition: all 0.7s;
+          &:nth-child(1){
+            transition: all 0.7s;
+            bottom: 0px;
+            z-index: 2;
+          }
+          &:nth-child(2){
+            transition: all 0.7s;
+            bottom: 0px;
+            z-index: 1;
+          }
+        }
+      }
+    }
+    // 类名7: 左0 右1
+    .showOnlyRightOne{
+      .animationtops_left{
+        width: 0px;
+        transition: all 0.7s;
+        // left: -400px;
+        .animationtops_left_item{
+          transition: all 0.7s;
+          &:nth-child(1){
+            transition: all 0.7s;
+            left: -330px!important;
+            z-index: 2;
+          }
+          &:nth-child(2){
+            transition: all 0.7s;
+            z-index: 1;
+            left: -330px!important;
+          }
+        }
+      }
+      .animationtops_right{
+        width: 100%;
+        transition: all 0.7s;
+        .animationtops_left_item{
+          transition: all 0.7s;
+          &:nth-child(1){
+            bottom: 0px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+          }
+          &:nth-child(2){
+            bottom: 0px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+          }
+        }
+      }
+    }
+    // 类名8：左0 右2
+    .showOnlyRightTwo{
+      .animationtops_left{
+        width: 0px;
+        transition: all 0.7s;
+        // left: -400px;
+        .animationtops_left_item{
+          transition: all 0.7s;
+          &:nth-child(1){
+            transition: all 0.7s;
+            left: -330px!important;
+            z-index: 2;
+          }
+          &:nth-child(2){
+            transition: all 0.7s;
+            z-index: 1;
+            left: -330px!important;
+          }
+        }
+      }
+      .animationtops_right{
+        width: 100%;
+        transition: all 0.7s;
+        .animationtops_left_item{
+          transition: all 0.7s;
+          &:nth-child(1){
+            bottom: 0px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+          }
+          &:nth-child(2){
+            bottom: 46%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+          }
+        }
+      }
+    }
+    // 只展示左侧样式-一个
+    .showLeftData{
+      .animationtops_right{
+        left: 330px;
+        top: 360px;
+        transform: scale(0.5);
+        width: 0px;
+      }
+      .animationtops_left{
+        width: 100%;
+        .animationtops_left_item{
+          left: 50%;
+          transform: translateX(-50%);
+        }
+      }
+    }
+    // 
+    .showLeftDataTwo{
+      .animationtops_left{
+        width: 100%;
+        .showoneClass{
+          left: 60%!important;
+          transform: translateX(-50%)!important;
+          z-index: 2;
+        }
+        .ShowClassTwo{
+          left: 40%!important;
+          z-index: 1;
+        }
+      }
+    }
+    // 只展示右侧样式
+    .showRightData{
+      .animationtops_left{
+        left: -100px;
+        width: 0px;
+      }
+      .animationtops_right{
+        width: 100%;
+        .animationtops_left_item{
+          left: 50%;
+          transform: translateX(-50%);
+        }
+      }
+    }
+    .animationtopsno_select{
+      // height: 68vh;
+    }
+  }
+  .selectTypeClass{
+    position: relative;
+    z-index: 999;
+  }
+  .one_centers_bottomtext{
+    position: fixed;
+    width: 96%;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 100px;
+    z-index: 1;
+    .titles{
+      .name{
+        font-size: 36px;
+        font-weight: bold;
+        color: #000000;
+        margin-bottom: 10px;
+      }
+      .desc{
+        font-size: 22px;
+        color: #333333;
+      }
+    }
+  }
+  .one_centersbottom_chang{
+    position: fixed;
+    width: 100%;
+    height: 32vh;
+    bottom: -32vh;
+    left: 0px;
+    background: #ffffff;
+    z-index: 999;
+    background: rgb(225, 192, 175);
+    border-radius: 50px 50px 0px 0px;
+    opacity: 0.3;
+    transition: all 0.7s;
+    .select_tops{
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      .select_tops_left{
+        display: flex;
+        align-items: center;
+        font-size: 26px;
+        color: #636262;
+        .xian{
+          display: inline-block;
+          margin: 0px 15px;
+        }
+        .active_select{
+          color: #000000;
+          font-weight: bold;
+        }
+      }
+      .select_tops_right{
+        font-size: 20px;
+        color: #636262;
+        .select_tops_right_left_item{
+          margin-right: 15px;
+        }
+        .select_tops_right_item{
+          display: inline-block;
+          vertical-align: top;
+        }
+      }
+    }
+    .select_cent{
+      width: 100%;
+      padding: 40px 30px 10px 30px;
+      .select_cent_all{
+        .select_cent_item{
+          display: inline-block;
+          vertical-align: top;
+          margin-right: 50px;
+          .select_cent_img{
+            width: 120px;
+            height: 120px;
+            image{
+              width: 100%;
+              height: 100%;
+            }
+          }
+          .select_cent_name{
+            width: 100%;
+            font-size: 26px;
+            text-align: center;
+            padding-top: 20px;
+          }
+          .select_cent_options{
+            width: 100%;
+            text-align: center;
+            height: 50px;
+            .options_icon{
+              display: flex;
+              align-items: center;
+              gap: 10px;
+              padding-top: 5px;
+              .previmg{
+                width: 40px;
+                height: 40px;
+              }
+              .nextimg{
+                width: 50px;
+                height: 50px;
+              }
+            }
+            .images{
+              width: 60px;
+              height: 60px;
+            }
+          }
+        }
+      }
+    }
+  }
+  .one_centersbottom_active_chang{
+    bottom: 0px;
+    opacity: 1;
+  }
+  .priceOperate{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .priceOperate_left{
+      display: flex;
+      align-items: center;
+      .price_line{
+        .price_line_text{
+          font-size: 22px;
+          padding-left: 10px;
+          text-decoration: line-through;
+        }
+      }
+    }
+    .priceOperate_right{
+      display: flex;
+      align-items: center;
+      line-height: 0px;
+      image{
+        width: 50px;
+        height: 50px;
+      }
+      .previcon_img{
+        width: 42px;
+        height: 42px;
+      }
+      .pricenum{
+        font-size: 32px;
+        color: #000000;
+        line-height: 32px;
+        margin: 0px 6px 0px 10px;
+        padding-bottom: 5px;
+      }
+    }
+  }
+  .AddShoppingCard{
+    width: 80%;
+    padding: 20px 0px;
+    background: #470716;
+    border-radius: 50px;
+    text-align: center;
+    color: #ffffff;
+    margin: 0px auto;
+    margin-top: 30px;
+    transition: all 0.7s;
+  }
+  .successoNohanges{
+    background: #4707161b;
+  }
+}
+@keyframes identifier {
+  0%{
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+  100% {
+    opacity: 1;
+  }
+}
