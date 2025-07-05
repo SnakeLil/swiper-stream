@@ -9,8 +9,6 @@ export default function Animaticomponone({ value }) {
     <View className='animationtwo_container'>
       {/* 轮播图样式 */}
       <View className='animationtwo_swiper'>
-        <View className='backgroundone'></View>
-        <View className='backgroundtwo'></View>
         <CarouselNative
           data={CarouselTop}
           onChange={(value) => {

@@ -2,24 +2,75 @@ import { View, Image } from "@tarojs/components";
 import { useState, useRef, useCallback } from "react";
 import "./index.scss";
 
-const CarouselNative = ({ data, onChange, reverse = false }) => {
-  const [activeIndex, setActiveIndex] = useState(0);
+const CarouselNative = ({
+  data,
+  onChange,
+  reverse = false,
+  activeIndex: externalActiveIndex,
+  defaultActiveIndex = 0,
+  showOnlyActive,
+  startAnim,
+}) => {
+  const [internalActiveIndex, setInternalActiveIndex] =
+    useState(defaultActiveIndex);
+  const [isAnimationEnd,setIsAnimationEnd] = useState(false)
+  let startXRef = useRef(null)
+  // 判断是否为受控组件
+  const isControlled = externalActiveIndex !== undefined;
+  const activeIndex = isControlled ? externalActiveIndex : internalActiveIndex;
   const [translateX, setTranslateX] = useState(0);
-  const containerRef = useRef(null);
-  const startXRef = useRef(0);
-  const isDraggingRef = useRef(false);
-  const transitionRef = useRef(true);
 
   // 获取实际数据索引（处理负数和超出范围的情况）
-  const getRealIndex = useCallback((index) => {
-    const len = data.length;
-    return ((index % len) + len) % len;
-  }, [data.length]);
-
+  const getRealIndex = useCallback(
+    (index) => {
+      const len = data.length;
+      return ((index % len) + len) % len;
+    },
+    [data.length]
+  );
   // 获取当前实际显示的数据项
   const getCurrentItem = useCallback(() => {
     return data[getRealIndex(activeIndex)];
   }, [activeIndex, data, getRealIndex]);
+  const containerRef = useRef(null);
+  const isDraggingRef = useRef(false);
+  const transitionRef = useRef(true);
+
+  // 生成渲染项目列表 - 包含足够的虚拟项目以支持无限滚动
+  const getRenderItems = () => {
+    const items = [];
+    const renderRange = 4; // 前后各渲染4个项目
+
+    for (
+      let i = activeIndex - renderRange;
+      i <= activeIndex + renderRange;
+      i++
+    ) {
+      const realIndex = getRealIndex(i);
+      const item = data[realIndex];
+
+      items.push({
+        key: `${realIndex}-${i}`, // 使用组合键确保唯一性
+        virtualIndex: i,
+        realIndex: realIndex,
+        item: item,
+      });
+    }
+
+    return items;
+  };
+
+  // 更新 activeIndex 的通用方法
+  const updateActiveIndex = useCallback(
+    (newIndex) => {
+      if (!isControlled) {
+        setInternalActiveIndex(newIndex);
+      }
+      // 总是触发 onChange 回调
+      onChange?.(data[getRealIndex(newIndex)], newIndex);
+    },
+    [isControlled, onChange, data, getRealIndex]
+  );
 
   const handleTouchStart = (e) => {
     startXRef.current = e.touches[0].clientX;
@@ -47,8 +98,7 @@ const CarouselNative = ({ data, onChange, reverse = false }) => {
 
     if (Math.abs(translateX) > threshold) {
       const newIndex = translateX > 0 ? activeIndex - 1 : activeIndex + 1;
-      setActiveIndex(newIndex);
-      onChange?.(data[getRealIndex(newIndex)]);
+      updateActiveIndex(newIndex);
     }
 
     setTranslateX(0);
@@ -79,54 +129,42 @@ const CarouselNative = ({ data, onChange, reverse = false }) => {
       return {
         transform: `translateX(${shortestDistance * 160}%) scale(0)`,
         opacity: 0,
-        visibility: 'hidden'
+        visibility: "hidden",
       };
     }
 
     const baseScale = 0.7;
     const maxScale = 1;
-    let scale = realDistance === 0 ? maxScale : Math.max(baseScale, 1 - (realDistance * 0.3));
+    let scale =
+      realDistance === 0
+        ? maxScale
+        : Math.max(baseScale, 1 - realDistance * 0.3);
 
     // 添加拖拽时的偏移
     let translateX = shortestDistance * 130;
     if (isDraggingRef.current) {
-      translateX += (translateX / Math.abs(translateX || 1)) * (translateX / 130) * 0.1;
+      translateX +=
+        (translateX / Math.abs(translateX || 1)) * (translateX / 130) * 0.1;
     }
 
-    let translateY = realDistance === 0 ? 0 : (reverse ? 80 : -80);
+    let translateY = realDistance === 0 ? 0 : reverse ? 80 : -80;
 
     return {
       transform: `
-        translateX(calc(${translateX}% + ${translateX * 0.1 * Math.sign(translateX)}px))
+        translateX(calc(${translateX}% + ${
+        translateX * 0.1 * Math.sign(translateX)
+      }px))
         translateY(${translateY}px)
         scale(${scale})
       `,
       transformOrigin: "center center",
       opacity: realDistance > 1 ? 0.3 : 1,
-      transition: transitionRef.current ? 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)' : 'none',
+      transition: transitionRef.current
+        ? "all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)"
+        : "none",
       zIndex: 10 - realDistance,
-      visibility: realDistance > 2 ? 'hidden' : 'visible'
+      visibility: realDistance > 2 ? "hidden" : "visible",
     };
-  };
-
-  // 生成渲染项目列表 - 包含足够的虚拟项目以支持无限滚动
-  const getRenderItems = () => {
-    const items = [];
-    const renderRange = 4; // 前后各渲染4个项目
-
-    for (let i = activeIndex - renderRange; i <= activeIndex + renderRange; i++) {
-      const realIndex = getRealIndex(i);
-      const item = data[realIndex];
-
-      items.push({
-        key: `${realIndex}-${i}`, // 使用组合键确保唯一性
-        virtualIndex: i,
-        realIndex: realIndex,
-        item: item
-      });
-    }
-
-    return items;
   };
 
   const handleItemClick = (virtualIndex) => {
@@ -146,17 +184,16 @@ const CarouselNative = ({ data, onChange, reverse = false }) => {
     }
 
     transitionRef.current = true;
-    setActiveIndex(targetIndex);
-    onChange?.(data[getRealIndex(targetIndex)]);
+    updateActiveIndex(targetIndex);
   };
 
   return (
-    <View className='carousel-native'>
-      <View className={`carousel-title ${reverse ? 'reverse' : ''}`}>
+    <View className="carousel-native">
+      <View className={`carousel-title transition-easeOutQuad ${reverse ? "reverse" : ""} ${startAnim ? 'opacity-1' : 'opacity-0'}`}>
         {getCurrentItem()?.name}
       </View>
       <View
-        className='carousel-container'
+        className={`carousel-container ${reverse ? 'carousel-container-reverse' : ''} ${startAnim ? 'anim' : ''}`}
         ref={containerRef}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
@@ -165,14 +202,15 @@ const CarouselNative = ({ data, onChange, reverse = false }) => {
         {getRenderItems().map(({ key, virtualIndex, item }) => (
           <View
             key={key}
-            className='carousel-item'
+            className={`carousel-item ${activeIndex !== virtualIndex && showOnlyActive ? 'opacity-0' : 'opacity-1'}`}
             style={{
               zIndex: activeIndex === virtualIndex ? 2 : 1,
+
             }}
             onClick={() => handleItemClick(virtualIndex)}
           >
             <Image
-              className='carousel-image'
+              className="carousel-image"
               src={item.img}
               style={getItemStyle(virtualIndex)}
             />
