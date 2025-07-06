@@ -42,11 +42,7 @@
     transform: translateY(-625px) translateX(-133px) scale(0.87)
   }
   .carousel-container.anim {
-    // animation: scaleAndTranslate 1s ease forwards;
     transform: translateY(0) translateX(0) scale(1);
-  }
-  .carousel-container.return-anim {
-    animation: scaleAndTranslateReturn 1s ease forwards;
   }
 
   .carousel-item {
@@ -75,21 +71,5 @@
     height: 24px;
     pointer-events: none;
     z-index: 20;
-  }
-}
-@keyframes scaleAndTranslate {
-  0% {
-    // transform: translateY(-81px) translateX(-73px) scale(0.87);
-  }
-  100% {
-    transform: translateY(0) translateX(0) scale(1);
-  }
-}
-@keyframes scaleAndTranslateReturn {
-  0% {
-    transform: translateY(0) translateX(0) scale(1);
-  }
-  100% {
-    transform: translateY(-81px) translateX(-73px) scale(0.87);
   }
 }

@@ -14,7 +14,6 @@ const CarouselNative = ({
 }) => {
   const [internalActiveIndex, setInternalActiveIndex] =
     useState(defaultActiveIndex);
-  const [isAnimationEnd,setIsAnimationEnd] = useState(false)
   let startXRef = useRef(null)
   // 判断是否为受控组件
   const isControlled = externalActiveIndex !== undefined;
@@ -51,7 +50,7 @@ const CarouselNative = ({
       const item = data[realIndex];
 
       items.push({
-        key: `${realIndex}-${i}`, // 使用组合键确保唯一性
+        key: `${realIndex}-${i}`,
         virtualIndex: i,
         realIndex: realIndex,
         item: item,
@@ -61,13 +60,11 @@ const CarouselNative = ({
     return items;
   };
 
-  // 更新 activeIndex 的通用方法
   const updateActiveIndex = useCallback(
     (newIndex) => {
       if (!isControlled) {
         setInternalActiveIndex(newIndex);
       }
-      // 总是触发 onChange 回调
       onChange?.(data[getRealIndex(newIndex)], newIndex);
     },
     [isControlled, onChange, data, getRealIndex]
@@ -85,7 +82,8 @@ const CarouselNative = ({
     const currentX = e.touches[0].clientX;
     const diff = currentX - startXRef.current;
 
-    const maxMove = 150;
+    // 最大拖拽距离，需要修改的话可以直接改这里
+    const maxMove = 300;
     const boundedDiff = Math.max(Math.min(diff, maxMove), -maxMove);
 
     setTranslateX(boundedDiff);
@@ -136,30 +134,39 @@ const CarouselNative = ({
 
     const baseScale = 0.7;
     const maxScale = 1;
-    let scale =
-      realDistance === 0
-        ? maxScale
-        : Math.max(baseScale, 1 - realDistance * 0.3);
 
-    // 添加拖拽时的偏移
-    let translateX = shortestDistance * 130;
-    if (isDraggingRef.current) {
-      translateX +=
-        (translateX / Math.abs(translateX || 1)) * (translateX / 130) * 0.1;
+    let translateXPercent = shortestDistance * 130;
+
+    // 拖拽时的实时偏移
+    if (isDraggingRef.current && translateX !== 0) {
+      // 这里使用一个固定的转换比例来保持一致性
+      const dragPercentage = (translateX / 280) * 130; // 280是图片宽度
+      translateXPercent += dragPercentage;
     }
 
-    let translateY = realDistance === 0 ? 0 : reverse ? 80 : -80;
+    // 根据当前位置计算缩放
+    const currentDistance = Math.abs(translateXPercent / 130);
+    let scale = currentDistance === 0
+      ? maxScale
+      : Math.max(baseScale, 1 - currentDistance * 0.3);
+
+    let translateY = 0;
+    if (currentDistance > 0.5) {
+      // 0.5到1之间
+      const yProgress = Math.min((currentDistance - 0.5) / 0.5, 1);
+      translateY = (reverse ? 80 : -80) * yProgress;
+    }
 
     return {
       transform: `
-        translateX(calc(${translateX}% + ${
-        translateX * 0.1 * Math.sign(translateX)
+        translateX(calc(${translateXPercent}% + ${
+        translateXPercent * 0.1 * Math.sign(translateXPercent)
       }px))
         translateY(${translateY}px)
         scale(${scale})
       `,
       transformOrigin: "center center",
-      opacity: realDistance > 1 ? 0.3 : 1,
+      opacity: currentDistance > 1 ? 0.3 : 1,
       transition: transitionRef.current
         ? "all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)"
         : "none",
