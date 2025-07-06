@@ -9,6 +9,8 @@ const IceCreamSelect = () => {
   const [startAnim, setStartAnim] = useState(false);
   const [showOnlyActive, setShowOnlyActive] = useState(true);
   const [swiperStartAnim, setSwiperStartAnim] = useState(false);
+  const [showBottomSwiper,setShowBottomSwiper] = useState(false)
+  const [startReturn,setStartReturn] = useState(false)
   const [data, setData] = useState({
     name: "脆皮条冰淇淋2个装+纸杯2个装",
     desc: "k满淋口点京幕，自前香奶，比利时巧克为...",
@@ -19,36 +21,43 @@ const IceCreamSelect = () => {
         name: "草莓",
         id: "1",
         img: require("@/animationtwo/assets/image/anitwo/caomei.png"),
+        showImg: require("@/animationtwo/assets/image/anitwo/show-caomei.png"),
       },
       {
         name: "罗姆酒",
         id: "2",
         img: require("@/animationtwo/assets/image/anitwo/langmujiu.png"),
+        showImg: require("@/animationtwo/assets/image/anitwo/langmujiu.png"),
       },
       {
         name: "抹茶",
         id: "3",
         img: require("@/animationtwo/assets/image/anitwo/mocha.png"),
+        showImg: require("@/animationtwo/assets/image/anitwo/mocha.png"),
       },
       {
         name: "巧克力冰",
         id: "4",
         img: require("@/animationtwo/assets/image/anitwo/qiaokelibinggan.png"),
+        showImg: require("@/animationtwo/assets/image/anitwo/qiaokelibinggan.png"),
       },
       {
         name: "巧克力双层",
         id: "5",
         img: require("@/animationtwo/assets/image/anitwo/qiaokelishuangpin.png"),
+        showImg: require("@/animationtwo/assets/image/anitwo/qiaokelishuangpin.png"),
       },
       {
         name: "香草",
         id: "6",
         img: require("@/animationtwo/assets/image/anitwo/xiangcao.png"),
+        showImg: require("@/animationtwo/assets/image/anitwo/xiangcao.png"),
       },
       {
         name: "夏威夷果",
         id: "7",
         img: require("@/animationtwo/assets/image/anitwo/xiaweiyiguo.png"),
+        showImg: require("@/animationtwo/assets/image/anitwo/xiaweiyiguo.png"),
       },
     ],
     CarouselBottom: [
@@ -114,10 +123,22 @@ const IceCreamSelect = () => {
     setTimeout(() => {
       setShowOnlyActive(false);
       setSwiperStartAnim(true);
+      setShowBottomSwiper(true)
     }, 800);
     console.log(item, "item");
   };
-
+  const handleConfirmChange = () => {
+    setSwiperStartAnim(false);
+    setShowOnlyActive(true);
+    setStartReturn(true)
+    setTimeout(() => {
+      setStartReturn(false)
+    }, 1000);
+    setTimeout(() => {
+      setStartAnim(false);
+      setShowBottomSwiper(false)
+    }, 1000);
+  }
   return (
     <View className='ice-cream-select-container'>
       <View className={`ball-swiper-container `}>
@@ -126,23 +147,27 @@ const IceCreamSelect = () => {
           <View className={`${startAnim ? "opacity-1" : "opacity-0"} transition-easeOutQuad`}>
             <CarouselNative
               startAnim={swiperStartAnim}
+              // startReturn={startReturn}
               showOnlyActive={showOnlyActive}
               defaultActiveIndex={topBallIndex}
               data={data.CarouselTop}
               onChange={(value) => {
-                console.log(value);
+                console.log(value,currentBalls);
+                setCurrentBalls(pre=>[value,pre[1]])
               }}
             />
           </View>
-          {swiperStartAnim && <View className='ball-confirm'>确认修改</View>}
-          <View className={`${swiperStartAnim ? "opacity-1" : "opacity-0"}`}>
+          {swiperStartAnim && <View onClick={handleConfirmChange} className='ball-confirm'>确认修改</View>}
+          <View className={`${showBottomSwiper ? "opacity-1" : "opacity-0"}`}>
             <CarouselNative
               startAnim={swiperStartAnim}
               showOnlyActive={false}
+              isReturn={startReturn}
               defaultActiveIndex={bottomBallIndex}
               data={data.CarouselBottom}
               onChange={(value) => {
                 console.log(value);
+                setCurrentBalls(pre=>[pre[0],value])
               }}
               reverse
             />
@@ -154,15 +179,15 @@ const IceCreamSelect = () => {
         <Image
           className={`bg-image ${startAnim ? "translateY-anim" : ""} ${
             swiperStartAnim ? "disappear-anim" : ""
-          }`}
+          } ${startReturn ? 'translateY-0' : ''}`}
           src='https://micvs-crm-test.oss-cn-shanghai.aliyuncs.com/hgds/testimage/leftselect.png'
           mode='aspectFill'
         />
       </View>
-      <View className={`ball-select-container transition-easeOutQuad ${swiperStartAnim ? 'opacity-0' : ''}`}>
-        {currentBalls.map((item) => {
+      <View className={`ball-select-container transition-easeOutQuad ${swiperStartAnim ? 'opacity-0 pointer-none' : ''}`}>
+        {currentBalls.map((item,index) => {
           return (
-            <View key={item.id} className='ball-select'>
+            <View key={`${item.id}-${index}`} className='ball-select'>
               <Image className='ball-img' src={item.img} mode='aspectFit' />
               <View className='text-container'>
                 <Text className='name'>{item.name}</Text>
@@ -176,15 +201,15 @@ const IceCreamSelect = () => {
       </View>
       <View className='ice-ball-container'>
         <Image
-          className={`ice-ball  ${startAnim ? "translateY-anim" : ""} ${
-            swiperStartAnim ? "hidden" : ""
-          }`}
-          src={currentBalls[1].img}
+          className={`ice-ball-double ${startAnim ? "opacity-0" : "opacity-1"}`}
+          src={currentBalls[0].showImg}
           mode='aspectFit'
         />
         <Image
-          className={`ice-ball-double ${startAnim ? "opacity-0" : "opacity-1"}`}
-          src={currentBalls[0].showImg}
+          className={`ice-ball  ${startAnim ? "translateY-anim" : ""} ${
+            showBottomSwiper ? "hidden" : ""
+          }  ${startReturn ? 'translateY-0' : ''}`}
+          src={currentBalls[1].img}
           mode='aspectFit'
         />
       </View>
@@ -192,7 +217,7 @@ const IceCreamSelect = () => {
       <View
         className={`ice-cream-container ${startAnim ? "translateY-anim" : ""} ${
           swiperStartAnim ? "disappear-anim" : ""
-        }`}
+        }  ${startReturn ? 'translateY-0' : ''}`}
       >
         <Image
           className='ice-cream-image'
@@ -202,16 +227,16 @@ const IceCreamSelect = () => {
       </View>
 
       {/* 底部选择区域 */}
-      <View className={`bottom-section transition-easeOutQuad ${swiperStartAnim ? 'opacity-0' : ''}`}>
+      <View className={`bottom-section transition-easeOutQuad ${swiperStartAnim ? 'opacity-0 pointer-none' : ''}`}>
         <View className='product-info'>
-          <Text className='product-title'>双球草莓奶冰淇淋</Text>
+          <Text className='product-title'>{data.name}</Text>
           <Text className='product-desc'>
-            草莓口味 奶香 香草味 巧克力碎片口味
+            {data.desc}
           </Text>
         </View>
 
         <View className='price-section'>
-          <Text className='price'>¥28</Text>
+          <Text className='price'>¥{data.price}</Text>
         </View>
         <View className='action-button'>
           <Text className='button-text'>加入购物车</Text>

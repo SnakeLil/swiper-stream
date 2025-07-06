@@ -1,3 +1,4 @@
 export default definePageConfig({
-  navigationBarTitleText: ''
-})
+  navigationBarTitleText: "",
+  disableScroll: true,
+});

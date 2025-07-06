@@ -10,6 +10,7 @@ const CarouselNative = ({
   defaultActiveIndex = 0,
   showOnlyActive,
   startAnim,
+  isReturn,
 }) => {
   const [internalActiveIndex, setInternalActiveIndex] =
     useState(defaultActiveIndex);
@@ -189,11 +190,11 @@ const CarouselNative = ({
 
   return (
     <View className="carousel-native">
-      <View className={`carousel-title transition-easeOutQuad ${reverse ? "reverse" : ""} ${startAnim ? 'opacity-1' : 'opacity-0'}`}>
+      <View className={`carousel-title transition-easeOutQuad ${reverse ? "reverse" : ""} ${startAnim ? 'opacity-1' : 'opacity-0'} `}>
         {getCurrentItem()?.name}
       </View>
       <View
-        className={`carousel-container ${reverse ? 'carousel-container-reverse' : ''} ${startAnim ? 'anim' : ''}`}
+        className={`carousel-container ${reverse ? (isReturn ? 'carousel-container-reverse-return' : 'carousel-container-reverse') : ''} ${startAnim ? 'anim' : ''} `}
         ref={containerRef}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
@@ -205,7 +206,7 @@ const CarouselNative = ({
             className={`carousel-item ${activeIndex !== virtualIndex && showOnlyActive ? 'opacity-0' : 'opacity-1'}`}
             style={{
               zIndex: activeIndex === virtualIndex ? 2 : 1,
-
+              filter: activeIndex === virtualIndex ? '' : 'blur(1px)',
             }}
             onClick={() => handleItemClick(virtualIndex)}
           >
