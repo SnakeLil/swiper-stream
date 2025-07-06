@@ -2,15 +2,14 @@ import React, { useState } from "react";
 import { View, Image, Text } from "@tarojs/components";
 import "./index.scss";
 import CarouselNative from "../swiper-carousel";
-
-const iceBallImg = require("@/animationtwo/assets/image/anitwo/caomei.png");
+import swiperBgImg from '@/animationtwo/assets/image/anitwo/swiper-bg.png'
 
 const IceCreamSelect = () => {
   const [startAnim, setStartAnim] = useState(false);
   const [showOnlyActive, setShowOnlyActive] = useState(true);
   const [swiperStartAnim, setSwiperStartAnim] = useState(false);
-  const [showBottomSwiper,setShowBottomSwiper] = useState(false)
-  const [startReturn,setStartReturn] = useState(false)
+  const [showBottomSwiper, setShowBottomSwiper] = useState(false);
+  const [startReturn, setStartReturn] = useState(false);
   const [data, setData] = useState({
     name: "脆皮条冰淇淋2个装+纸杯2个装",
     desc: "k满淋口点京幕，自前香奶，比利时巧克为...",
@@ -123,28 +122,32 @@ const IceCreamSelect = () => {
     setTimeout(() => {
       setShowOnlyActive(false);
       setSwiperStartAnim(true);
-      setShowBottomSwiper(true)
+      setShowBottomSwiper(true);
     }, 800);
     console.log(item, "item");
   };
   const handleConfirmChange = () => {
     setSwiperStartAnim(false);
     setShowOnlyActive(true);
-    setStartReturn(true)
+    setStartReturn(true);
     setTimeout(() => {
-      setStartReturn(false)
+      setStartReturn(false);
     }, 1000);
     setTimeout(() => {
       setStartAnim(false);
-      setShowBottomSwiper(false)
+      setShowBottomSwiper(false);
     }, 1000);
-  }
+  };
   return (
     <View className='ice-cream-select-container'>
       <View className={`ball-swiper-container `}>
         {/* 轮播图样式 */}
         <View className='ball-swiper'>
-          <View className={`${startAnim ? "opacity-1" : "opacity-0"} transition-easeOutQuad`}>
+          <View
+            className={`${
+              startAnim ? "opacity-1" : "opacity-0"
+            } transition-easeOutQuad`}
+          >
             <CarouselNative
               startAnim={swiperStartAnim}
               // startReturn={startReturn}
@@ -152,12 +155,16 @@ const IceCreamSelect = () => {
               defaultActiveIndex={topBallIndex}
               data={data.CarouselTop}
               onChange={(value) => {
-                console.log(value,currentBalls);
-                setCurrentBalls(pre=>[value,pre[1]])
+                console.log(value, currentBalls);
+                setCurrentBalls((pre) => [value, pre[1]]);
               }}
             />
           </View>
-          {swiperStartAnim && <View onClick={handleConfirmChange} className='ball-confirm'>确认修改</View>}
+          {swiperStartAnim && (
+            <View onClick={handleConfirmChange} className='ball-confirm'>
+              确认修改
+            </View>
+          )}
           <View className={`${showBottomSwiper ? "opacity-1" : "opacity-0"}`}>
             <CarouselNative
               startAnim={swiperStartAnim}
@@ -167,7 +174,7 @@ const IceCreamSelect = () => {
               data={data.CarouselBottom}
               onChange={(value) => {
                 console.log(value);
-                setCurrentBalls(pre=>[pre[0],value])
+                setCurrentBalls((pre) => [pre[0], value]);
               }}
               reverse
             />
@@ -177,15 +184,26 @@ const IceCreamSelect = () => {
       {/* 背景 */}
       <View className='background'>
         <Image
-          className={`bg-image ${startAnim ? "translateY-anim" : ""} ${
-            swiperStartAnim ? "disappear-anim" : ""
-          } ${startReturn ? 'translateY-0' : ''}`}
-          src='https://micvs-crm-test.oss-cn-shanghai.aliyuncs.com/hgds/testimage/leftselect.png'
+          className={`bg-image ${
+            swiperStartAnim ? "opacity-0" : "opacity-1"
+          }`}
+          src='https://micvs-crm-test.oss-cn-shanghai.aliyuncs.com/hgds/testimage/homebackground.png'
+          mode='aspectFill'
+        />
+        <Image
+          className={`bg-image ${
+            swiperStartAnim ? "opacity-1" : "opacity-0"
+          }`}
+          src={swiperBgImg}
           mode='aspectFill'
         />
       </View>
-      <View className={`ball-select-container transition-easeOutQuad ${swiperStartAnim ? 'opacity-0 pointer-none' : ''}`}>
-        {currentBalls.map((item,index) => {
+      <View
+        className={`ball-select-container transition-easeOutQuad ${
+          swiperStartAnim ? "opacity-0 pointer-none" : ""
+        }`}
+      >
+        {currentBalls.map((item, index) => {
           return (
             <View key={`${item.id}-${index}`} className='ball-select'>
               <Image className='ball-img' src={item.img} mode='aspectFit' />
@@ -208,31 +226,38 @@ const IceCreamSelect = () => {
         <Image
           className={`ice-ball  ${startAnim ? "translateY-anim" : ""} ${
             showBottomSwiper ? "hidden" : ""
-          }  ${startReturn ? 'translateY-0' : ''}`}
+          }  ${startReturn ? "translateY-0" : ""}`}
           src={currentBalls[1].img}
           mode='aspectFit'
         />
       </View>
       {/* 冰淇淋展示区 */}
-      <View
-        className={`ice-cream-container ${startAnim ? "translateY-anim" : ""} ${
-          swiperStartAnim ? "disappear-anim" : ""
-        }  ${startReturn ? 'translateY-0' : ''}`}
-      >
+      <View className={`ice-cream-container `}>
         <Image
-          className='ice-cream-image'
+          className={`ice-cream-image ${startAnim ? "translateY-anim" : ""} ${
+            swiperStartAnim ? "disappear-anim" : ""
+          }  ${startReturn ? "translateY-0" : ""}`}
           src='https://micvs-crm-test.oss-cn-shanghai.aliyuncs.com/hgds/testimage/bottomicon.png'
+          mode='aspectFit'
+        />
+        <Image
+          className={`ice-cream-base ${startAnim ? "translateY-anim" : ""} ${
+            swiperStartAnim ? "disappear-anim" : ""
+          }  ${startReturn ? "translateY-0" : ""}`}
+          src='https://micvs-crm-test.oss-cn-shanghai.aliyuncs.com/hgds/testimage/homedipan.png'
           mode='aspectFit'
         />
       </View>
 
       {/* 底部选择区域 */}
-      <View className={`bottom-section transition-easeOutQuad ${swiperStartAnim ? 'opacity-0 pointer-none' : ''}`}>
+      <View
+        className={`bottom-section transition-easeOutQuad ${
+          swiperStartAnim ? "opacity-0 pointer-none" : ""
+        }`}
+      >
         <View className='product-info'>
           <Text className='product-title'>{data.name}</Text>
-          <Text className='product-desc'>
-            {data.desc}
-          </Text>
+          <Text className='product-desc'>{data.desc}</Text>
         </View>
 
         <View className='price-section'>
