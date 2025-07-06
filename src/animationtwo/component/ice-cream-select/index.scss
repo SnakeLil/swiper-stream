@@ -225,14 +225,10 @@
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 3;
+  z-index: 4;
   // opacity: 0;
   height: 100vh;
   transition: all 1s cubic-bezier(0.5, 1, 0.89, 1);
-  .index_top{
-    width: 100%;
-    height: 160px;
-  }
   .ball-swiper{
     width: 100%;
     height: calc(100% - 200px);

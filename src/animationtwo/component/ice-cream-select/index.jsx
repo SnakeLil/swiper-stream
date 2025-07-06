@@ -140,7 +140,7 @@ const IceCreamSelect = () => {
   };
   return (
     <View className='ice-cream-select-container'>
-      <View className={`ball-swiper-container `}>
+      <View className={`ball-swiper-container ${startAnim ? '' : 'pointer-none'}`}>
         {/* 轮播图样式 */}
         <View className='ball-swiper'>
           <View

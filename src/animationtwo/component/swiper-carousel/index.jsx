@@ -189,7 +189,7 @@ const CarouselNative = ({
   };
 
   return (
-    <View className="carousel-native">
+    <View className={`carousel-native ${reverse ? 'carousel-native-reverse' : ''}`}>
       <View className={`carousel-title transition-easeOutQuad ${reverse ? "reverse" : ""} ${startAnim ? 'opacity-1' : 'opacity-0'} `}>
         {getCurrentItem()?.name}
       </View>
@@ -205,7 +205,7 @@ const CarouselNative = ({
             key={key}
             className={`carousel-item ${activeIndex !== virtualIndex && showOnlyActive ? 'opacity-0' : 'opacity-1'}`}
             style={{
-              zIndex: activeIndex === virtualIndex ? 2 : 1,
+              zIndex: activeIndex === virtualIndex ? 4 : 1,
               filter: activeIndex === virtualIndex ? '' : 'blur(1px)',
             }}
             onClick={() => handleItemClick(virtualIndex)}
