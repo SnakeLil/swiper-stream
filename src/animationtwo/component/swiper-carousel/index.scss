@@ -5,14 +5,14 @@
   position: relative;
   z-index: 10;
   width: 100%;
-  height: 600px;
+  height: 560px;
   overflow: visible;
 
   .carousel-title {
     text-align: center;
     position: absolute;
     left: 50%;
-    top: 15%;
+    top: 10%;
     transform: translateX(-50%);
     color: #ffffff;
     font-size: 40px;
@@ -22,7 +22,7 @@
 
     &.reverse {
       top: auto;
-      bottom: 15%;
+      bottom: 10%;
     }
   }
 
@@ -36,10 +36,10 @@
     transition: transform 1s ease;
   }
   .carousel-container-reverse {
-    transform: translateY(-575px) translateX(-133px) scale(0.87)
+    transform: translateY(-535px) translateX(-133px) scale(0.87)
   }
   .carousel-container-reverse-return {
-    transform: translateY(-625px) translateX(-133px) scale(0.87)
+    transform: translateY(-585px) translateX(-133px) scale(0.87)
   }
   .carousel-container.anim {
     transform: translateY(0) translateX(0) scale(1);
@@ -72,4 +72,20 @@
     pointer-events: none;
     z-index: 20;
   }
+}
+
+@media screen and (min-aspect-ratio: 55/100) and (max-width: 450px) {
+  .carousel-native {
+    height: 500px;
+    .carousel-container {
+      transform: translateY(-84px) translateX(-133px) scale(0.87);
+    }
+    .carousel-container-reverse {
+      transform: translateY(-475px) translateX(-133px) scale(0.87)
+    }
+    .carousel-container-reverse-return {
+      transform: translateY(-515px) translateX(-133px) scale(0.87)
+    }
+  }
+
 }

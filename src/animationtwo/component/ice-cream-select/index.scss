@@ -226,7 +226,7 @@
   left: 0;
   width: 100%;
   z-index: 4;
-  // opacity: 0;
+  // opacity: 1 !important;
   height: 100vh;
   transition: all 1s cubic-bezier(0.5, 1, 0.89, 1);
   .ball-swiper{
@@ -283,13 +283,13 @@
 }
 
 @media screen and (min-aspect-ratio: 55/100) and (max-width: 450px) {
-  .ball-swiper{
-    padding-top: 60px !important;
-  }
-  .ice-ball-container {
-    top: 240px !important;
-  }
-  .ice-cream-container {
-    top: 395px !important;
-  }
+  // .ball-swiper{
+  //   padding-top: 60px !important;
+  // }
+  // .ice-ball-container {
+  //   top: 240px !important;
+  // }
+  // .ice-cream-container {
+  //   top: 395px !important;
+  // }
 }
