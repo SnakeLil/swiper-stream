@@ -214,6 +214,7 @@ const CarouselNative = ({
             style={{
               zIndex: activeIndex === virtualIndex ? 4 : 1,
               filter: activeIndex === virtualIndex ? '' : 'blur(1px)',
+              opacity: isReturn && activeIndex !== virtualIndex ? '0 !important' : '',
             }}
             onClick={() => handleItemClick(virtualIndex)}
           >
