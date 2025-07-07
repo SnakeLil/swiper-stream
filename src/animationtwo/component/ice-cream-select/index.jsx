@@ -194,7 +194,7 @@ const IceCreamSelect = () => {
       <View className='background'>
         <Image
           className={`bg-image ${swiperStartAnim ? "opacity-0" : "opacity-1"}`}
-          src='https://micvs-crm-test.oss-cn-shanghai.aliyuncs.com/hgds/testimage/homebackground.png'
+          src='https://micvs-crm-test.oss-cn-shanghai.aliyuncs.com/hgds/testimage/homebackgrounds.png'
           mode='aspectFill'
         />
         <Image
@@ -249,7 +249,7 @@ const IceCreamSelect = () => {
           className={`ice-cream-base ${startAnim ? "translateY-anim" : ""} ${
             swiperStartAnim ? "disappear-anim" : ""
           }  ${startReturn ? "translateY-0" : ""}`}
-          src='https://micvs-crm-test.oss-cn-shanghai.aliyuncs.com/hgds/testimage/homedipan.png'
+          src='https://micvs-crm-test.oss-cn-shanghai.aliyuncs.com/hgds/testimage/homebottoms.png'
           mode='aspectFit'
         />
       </View>
