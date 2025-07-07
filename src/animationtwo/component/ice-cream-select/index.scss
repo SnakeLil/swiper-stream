@@ -5,7 +5,9 @@
   overflow: hidden;
   background: linear-gradient(135deg, #ff6b6b, #ee5a52);
 }
-
+.rotate-180 {
+  transform: rotate(180deg) !important;
+}
 .opacity-0 {
   opacity: 0 !important;
 }
@@ -178,12 +180,28 @@
       margin-bottom: 8px;
       display: block;
     }
-
-    .product-desc {
-      font-size: 24px;
-      color: white;
-      line-height: 1.4;
-      display: block;
+    .high {
+      max-height: 160px;
+    }
+    .short {
+      max-height: 30px;
+    }
+    .desc-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      .product-desc {
+        font-size: 24px;
+        color: white;
+        line-height: 1.4;
+        display: block;
+      }
+      .arrow {
+        min-width: 20px;
+        max-width: 20px;
+        height: 30px;
+        padding: 3px;
+      }
     }
   }
 

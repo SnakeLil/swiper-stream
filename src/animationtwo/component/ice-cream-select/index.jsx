@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { View, Image, Text } from "@tarojs/components";
 import "./index.scss";
 import CarouselNative from "../swiper-carousel";
-import swiperBgImg from '@/animationtwo/assets/image/anitwo/swiper-bg.png'
+import swiperBgImg from "@/animationtwo/assets/image/anitwo/swiper-bg.png";
+import ArrowImg from "@/animationtwo/assets/image/anitwo/arrow-more.png";
 
 const IceCreamSelect = () => {
   const [startAnim, setStartAnim] = useState(false);
@@ -10,9 +11,10 @@ const IceCreamSelect = () => {
   const [swiperStartAnim, setSwiperStartAnim] = useState(false);
   const [showBottomSwiper, setShowBottomSwiper] = useState(false);
   const [startReturn, setStartReturn] = useState(false);
+  const [showMore, setShowMore] = useState(false);
   const [data, setData] = useState({
     name: "脆皮条冰淇淋2个装+纸杯2个装",
-    desc: "k满淋口点京幕，自前香奶，比利时巧克为...",
+    desc: "k满淋口点京幕，自前香奶，比利时巧克为口点京幕，自前香奶，比利时巧克为口点京幕，自前香奶，比利时巧克为",
     price: 226,
     underlineprice: 398,
     CarouselTop: [
@@ -97,6 +99,8 @@ const IceCreamSelect = () => {
       },
     ],
   });
+  const foldLength = 20;
+  const needFold = data.desc.length > foldLength;
   const [currentBalls, setCurrentBalls] = useState([
     {
       name: "草莓",
@@ -138,9 +142,14 @@ const IceCreamSelect = () => {
       setShowBottomSwiper(false);
     }, 1000);
   };
+  const handleShowMore = () => {
+    setShowMore((pre) => !pre);
+  };
   return (
     <View className='ice-cream-select-container'>
-      <View className={`ball-swiper-container ${startAnim ? '' : 'pointer-none'}`}>
+      <View
+        className={`ball-swiper-container ${startAnim ? "" : "pointer-none"}`}
+      >
         {/* 轮播图样式 */}
         <View className='ball-swiper'>
           <View
@@ -184,16 +193,12 @@ const IceCreamSelect = () => {
       {/* 背景 */}
       <View className='background'>
         <Image
-          className={`bg-image ${
-            swiperStartAnim ? "opacity-0" : "opacity-1"
-          }`}
+          className={`bg-image ${swiperStartAnim ? "opacity-0" : "opacity-1"}`}
           src='https://micvs-crm-test.oss-cn-shanghai.aliyuncs.com/hgds/testimage/homebackground.png'
           mode='aspectFill'
         />
         <Image
-          className={`bg-image ${
-            swiperStartAnim ? "opacity-1" : "opacity-0"
-          }`}
+          className={`bg-image ${swiperStartAnim ? "opacity-1" : "opacity-0"}`}
           src={swiperBgImg}
           mode='aspectFill'
         />
@@ -257,7 +262,19 @@ const IceCreamSelect = () => {
       >
         <View className='product-info'>
           <Text className='product-title'>{data.name}</Text>
-          <Text className='product-desc'>{data.desc}</Text>
+          <View className={`desc-container ${showMore ? 'high' : 'short'}`}>
+            <Text className='product-desc'>
+              {needFold && !showMore ? `${data.desc.slice(0, foldLength)}...` : data.desc}
+            </Text>
+            {needFold && (
+              <Image
+                onClick={handleShowMore}
+                className={`arrow ${showMore ? "rotate-180" : ""}`}
+                src={ArrowImg}
+                mode='aspectFit'
+              />
+            )}
+          </View>
         </View>
 
         <View className='price-section'>
