@@ -4,6 +4,7 @@ import "./index.scss";
 import CarouselNative from "../swiper-carousel";
 import swiperBgImg from "@/animationtwo/assets/image/anitwo/swiper-bg.png";
 import ArrowImg from "@/animationtwo/assets/image/anitwo/arrow-more.png";
+import Taro from "@tarojs/taro";
 
 const IceCreamSelect = () => {
   const [startAnim, setStartAnim] = useState(false);
@@ -123,6 +124,10 @@ const IceCreamSelect = () => {
   );
 
   const handleChange = (item) => {
+    Taro.pageScrollTo({
+      scrollTop: 0,
+      duration: 0,
+    })
     setStartAnim(true);
     setTimeout(() => {
       setShowOnlyActive(false);
